@@ -1,0 +1,109 @@
+﻿<Window x:Class="RTCGroupWindow.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RTCGroupWindow"
+        mc:Ignorable="d"
+        Title="RTCManager" Height="450" Width="800">
+    <Grid>
+        <Menu Height="20" VerticalAlignment="Top">
+            <MenuItem Name="miFile" Header="Файл" Click="MiFile_Click"/>
+            <MenuItem Name="miEdit" Header="Правка" Click="MiEdit_Click">
+                <MenuItem Header="Обновить"/>
+                <Separator/>
+                <MenuItem Header="Добавить"/>
+                <MenuItem Header="Редактировать"/>
+                <MenuItem Header="Удалить"/>
+                <Separator/>
+                <MenuItem Header="Копировать"/>
+                <MenuItem Header="Вставить"/>
+            </MenuItem>
+            <MenuItem Name="miReport" Header="Отчеты">
+                <MenuItem Header="Экспортировать в Excel" Click="MenuItem_Click"/>
+                <MenuItem Header="Создать"/>
+            </MenuItem>
+            <MenuItem Name="miHelp" Header="Справка" Click="MiHelp_Click"/>
+            <MenuItem Name="miAbout" Header="О программе"/>
+        </Menu>
+        <ToolBar Height="30" Margin="0,20,0,0" VerticalAlignment="Top">
+            <Button x:Name="btnRefresh" BorderBrush="Transparent" Background="Transparent" Click="BtnRefresh_Click">
+                <ContentControl Width="16" Height="16" ToolTip="Обновить данные" Content="{StaticResource update}"/>
+            </Button>
+            <Button x:Name="btnAdd" BorderBrush="Transparent" Background="Transparent" Click="BtnAdd_Click">
+                <ContentControl Width="16" Height="16" ToolTip="Добавить запись" Content="{StaticResource addNew}"/>
+            </Button>
+            <Button x:Name="btnEdit" BorderBrush="Transparent" Background="Transparent">
+                <ContentControl Width="16" Height="16" ToolTip="Редактировать выделенную запись" Content="{StaticResource edit}"/>
+            </Button>
+            <Button x:Name="btnDelete" BorderBrush="Transparent" Background="Transparent">
+                <ContentControl Width="16" Height="16" ToolTip="Обновить выделенную запись" Content="{StaticResource delete}"/>
+            </Button>
+        </ToolBar>
+        <!--<Menu Height="30" Margin="0,20,0,0" VerticalAlignment="Top">
+            <Button  BorderBrush="Transparent" Background="Transparent">
+                <ContentControl Width="16" Height="16" ToolTip="Обновить данные" Content="{StaticResource update}"/>
+            </Button>
+            <Button BorderBrush="Transparent" Background="Transparent">
+                <ContentControl Width="16" Height="16" ToolTip="Добавить запись" Content="{StaticResource addNew}"/>
+            </Button>
+            <Button BorderBrush="Transparent" Background="Transparent">
+                <ContentControl Width="16" Height="16" ToolTip="Редактировать выделенную запись" Content="{StaticResource edit}"/>
+            </Button>
+            <Button BorderBrush="Transparent" Background="Transparent">
+                <ContentControl Width="16" Height="16" ToolTip="Обновить выделенную запись" Content="{StaticResource delete}"/>
+            </Button>
+        </Menu>-->
+        <TabControl Margin="0,50,0,0" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem x:Name="tiStore" Header="Склад" Height="22" VerticalAlignment="Bottom" MouseDown="TabItem_MouseDown_2">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid Name="dgStore" Margin="0,0,0,0" CanUserAddRows="False" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray" RowBackground="LightGray" AlternatingRowBackground="White" SelectionChanged="DgStore_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Path=ID}" Width="25" />
+                            <DataGridTextColumn Header="Наименование" Binding="{Binding Path=Title}" Width="200" />
+                            <DataGridTextColumn Header="МРЦ" Binding="{Binding Path=MRC}" Width="70" />
+                            <DataGridTextColumn Header="Закуп.цена" Binding="{Binding Path=Price}" Width="70" />
+                            <DataGridTextColumn Header="Остатки" Binding="{Binding Path=Count}" Width="70" />
+                            <DataGridTextColumn Header="Резерв" Binding="{Binding Path=Reserve}" Width="70" />
+                            <DataGridTextColumn Header="Импортер" Binding="{Binding Path=Importer}" Width="200" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tiClient" Header="Клиенты" MouseDown="TabItem_MouseDown_1">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid Name="dgClient" Margin="0,0,0,0" SelectionChanged="DgStore_SelectionChanged" CanUserAddRows="False" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray" RowBackground="LightGray" AlternatingRowBackground="White">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Path=ID}" Width="25" />
+                            <DataGridTextColumn Header="ФИО" Binding="{Binding Path=Name}" Width="180" />
+                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path=Adress}" Width="220" />
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path=Phone}" Width="100" />
+                            <DataGridTextColumn Header="Информация" Binding="{Binding Path=Info}" Width="210" />
+                            <DataGridTextColumn Header="№Мен." Binding="{Binding Path=ManagerID}" Width="50" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tiOrder" Header="Мои заявки" MouseDown="TabItem_MouseDown">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid Name="dgRequest" Margin="0,0,0,0" SelectionChanged="DgStore_SelectionChanged" CanUserAddRows="False" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray" RowBackground="LightGray" AlternatingRowBackground="White">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Path=ID}" Width="25" />
+                            <DataGridTextColumn Header="Клиент" Binding="{Binding Path=Name}" Width="180" />
+                            <DataGridTextColumn Header="Сумма" Binding="{Binding Path=Price}" Width="100" />
+                            <DataGridTextColumn Header="Статус" Binding="{Binding Path=Status}" Width="100" />
+                            <DataGridTextColumn Header="Тип оплаты" Binding="{Binding Path=TypeOfPayment}" Width="150" />
+                            <DataGridTextColumn Header="Выплачено" Binding="{Binding Path=Made}" Width="100" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Товар">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid Name="dgProduct" Margin="0,0,0,0"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>
